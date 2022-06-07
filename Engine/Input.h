@@ -1,0 +1,48 @@
+/*--------------------------------------------------------------
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+File Name: Input.h
+Project: CS230
+Author: Seulbin Seo
+Creation date: 04/15/2022
+-----------------------------------------------------------------*/
+#pragma once
+#include <vector>
+
+namespace CS230
+{
+	class InputKey
+	{
+	public:
+		enum class Keyboard
+		{
+			None, Enter, Escape, Space, Left, Up, Right, Down,
+			A, B, C, D, E, F, G, H, I, J,
+			K, L, M, N, O, P, Q, R, S, T,
+			U, V, W, X, Y, Z, Tilde,
+			Count
+		};
+
+		InputKey(Keyboard button);
+		bool IsKeyDown() const;
+		bool IsKeyReleased() const;
+	private:
+		Keyboard button;
+	};
+	//InpoutKey class : indirection(간접지정), stores the button which it cares about.
+
+	class Input
+	{
+	public:
+		Input();
+		bool IsKeyDown(InputKey::Keyboard key) const;
+		bool IsKeyReleased(InputKey::Keyboard key) const;
+		void SetKeyDown(InputKey::Keyboard key, bool value);
+		void Update();
+
+	private:
+		std::vector<bool> keyDown;
+		std::vector<bool> wasKeyDown;
+	};
+}
