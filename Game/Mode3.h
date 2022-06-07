@@ -8,17 +8,18 @@ Author: Seulbin Seo
 Creation date: 06/08/2022
 -----------------------------------------------------------------*/
 #pragma once
-//#include "..\Engine\GameState.h"
-//#include "..\Engine\Input.h"
-//#include "..\Engine\Camera.h"
-//#include "Background.h"
+#include "..\Engine\GameState.h"
+#include "..\Engine\Input.h"
+#include "..\Engine\Camera.h"
+#include "Background.h"
 #include "..\Engine\GameObjectManager.h"
 
-//namespace CS230
-//{
-//	class Camera; //forward declare
-//}
+namespace CS230
+{
+	class Camera; //forward declare
+}
 
+class Player;
 class Mode3 : public CS230::GameState
 {
 public:
@@ -32,7 +33,9 @@ public:
 	std::string GetName() override { return "Mode3"; }
 
 private:
+	Background* BackGround;
 	CS230::InputKey Reload;
 	CS230::InputKey modeNext;
 	CS230::GameObjectManager* gameObjectManager;
+	Player* playerPtr;
 };

@@ -12,5 +12,6 @@ enum class GameObjectType {
     Laser,
     Particle,
     EnemyShip,
+    Player,
     Count,
 };

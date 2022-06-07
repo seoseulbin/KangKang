@@ -23,7 +23,7 @@ int main(void)
 	try
 	{
 		Engine& engine = Engine::Instance();
-		engine.Init("Assignment  12 - Seulbin Seo");
+		engine.Init("Final Project - Seulbin Seo & junsung Park");
 		Splash splash;
 		MainMenu mainmenu;
 		Mode1 mode1;
