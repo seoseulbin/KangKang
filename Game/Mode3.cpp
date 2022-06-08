@@ -13,6 +13,8 @@ Creation date: 06/08/2022
 #include "Player.h"
 #include "Background.h"
 
+#include <iostream>
+
 
 Mode3::Mode3() : Reload(CS230::InputKey::Keyboard::R), modeNext(CS230::InputKey::Keyboard::Escape), 
 gameObjectManager(nullptr), playerPtr(nullptr), BGround(nullptr)
