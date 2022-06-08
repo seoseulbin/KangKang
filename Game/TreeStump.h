@@ -7,7 +7,6 @@ Project: CS230
 Author: Seulbin Seo
 Creation date: 4/30/2022
 -----------------------------------------------------------------*/
-
 #pragma once
 
 #include "..\Engine\GameObject.h"

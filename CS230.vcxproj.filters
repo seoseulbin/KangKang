@@ -119,6 +119,15 @@
     <ClCompile Include="Game\Player.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Car1.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Car2.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Car3.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -291,6 +300,18 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Player.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Car1.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Car1_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Car2.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Car3.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
