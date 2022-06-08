@@ -33,7 +33,7 @@ public:
 	std::string GetName() override { return "Mode3"; }
 
 private:
-	Background* BackGround;
+	Background* BGround;
 	CS230::InputKey Reload;
 	CS230::InputKey modeNext;
 	CS230::GameObjectManager* gameObjectManager;

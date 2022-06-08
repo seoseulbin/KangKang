@@ -13,8 +13,9 @@ Creation date: 06/08/2022
 #include "Player.h"
 #include "Background.h"
 
-Mode3::Mode3() : Reload(CS230::InputKey::Keyboard::R), modeNext(CS230::InputKey::Keyboard::Escape), gameObjectManager(nullptr),
-playerPtr(nullptr), BackGround(nullptr)
+
+Mode3::Mode3() : Reload(CS230::InputKey::Keyboard::R), modeNext(CS230::InputKey::Keyboard::Escape), 
+gameObjectManager(nullptr), playerPtr(nullptr), BGround(nullptr)
 {
 }
 
@@ -22,16 +23,20 @@ void Mode3::Load()
 {
 	gameObjectManager = new CS230::GameObjectManager();
 	AddGSComponent(gameObjectManager);
-	playerPtr = new Player({ 350, 200 });
+	playerPtr = new Player({ 600, -5 });
 	gameObjectManager->Add(playerPtr);
 
-	BackGround = GetGSComponent<Background>();
-	BackGround->Add("Assets/background3.png", 1);
+	AddGSComponent(new Background());
 
-	CS230::Camera* cameraPtr = new CS230::Camera({ { 0, 0.15 * Engine::GetWindow().GetSize().y }, { 0, 0.35 * Engine::GetWindow().GetSize().y } });
+	BGround = GetGSComponent<Background>();
+	BGround->Add("Assets/background3.png", 1 );
+
+
+	
+	CS230::Camera* cameraPtr = new CS230::Camera({ { 0 , 0.15 * Engine::GetWindow().GetSize().y }, { 0, 0.39 * Engine::GetWindow().GetSize().y } });
 	AddGSComponent(cameraPtr);
-	cameraPtr->SetExtent({ { 0,0 }, { BackGround->Size() - Engine::GetWindow().GetSize() } });
-	cameraPtr->SetPosition(math::vec2{ 0, 0 });
+	cameraPtr->SetExtent({ { 0 ,0 }, { BGround->Size() - Engine::GetWindow().GetSize() } });
+	cameraPtr->SetPosition(math::vec2{ 0, 0});
 
 #ifdef _DEBUG
 	
@@ -64,7 +69,7 @@ void Mode3::Draw()
 {
 	Engine::GetWindow().Clear(0x2976bbFF);
 	CS230::Camera* cameraPtr = GetGSComponent<CS230::Camera>();
-	BackGround->Draw(*cameraPtr);
+	BGround->Draw(*cameraPtr);
 
 	math::TransformMatrix cameraMatrix = cameraPtr->GetMatrix();
 	gameObjectManager->DrawAll(cameraMatrix);

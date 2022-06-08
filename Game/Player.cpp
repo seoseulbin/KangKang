@@ -8,6 +8,8 @@ Author: Seulbin Seo
 Creation date: 06/08/2022
 -----------------------------------------------------------------*/
 #include "Player.h"
+#include "../Engine/Engine.h"
+#include "../Engine/Camera.h"
 
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
@@ -24,6 +26,30 @@ Player::Player(math::vec2 startpos)
 void Player::Update(double dt)
 {
 	GameObject::Update(dt);
+
+	if (GetPosition().x < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 100)
+	{
+		SetPosition({ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -120, GetPosition().y });
+		SetVelocity({ 0, GetVelocity().y });
+	}
+	if ((GetPosition().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - 50)
+	{
+		SetPosition(
+			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -50, GetPosition().y });
+		SetVelocity({ 0, GetVelocity().y });
+	}
+	if (GetPosition().y < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 90)
+	{
+		SetPosition(
+			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 - 90 });
+		SetVelocity({ GetVelocity().x, 0});
+	}
+	if ((GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - 80)
+	{
+		SetPosition(
+			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2 - 80 });
+		SetVelocity({ 0, GetVelocity().y });
+	}
 }
 
 void Player::Draw(math::TransformMatrix displayMatrix)
@@ -45,19 +71,19 @@ void Player::UpdateXYVelocity(double dt)
 {
 	if (moveLeftKey.IsKeyDown() == true)
 	{
-		UpdatePosition({ -GoJump * dt, 0 });
+		SetPosition({GetPosition().x - GoJump * dt, GetPosition().y});
 	}
 	if (moveRightKey.IsKeyDown() == true)
 	{
-		UpdatePosition({ GoJump * dt, 0 });
+		SetPosition({ GetPosition().x + GoJump * dt, GetPosition().y });
 	}
 	if (moveUpKey.IsKeyDown() == true)
 	{
-		UpdatePosition({ 0, GoJump * dt });
+		SetPosition({ GetPosition().x, GetPosition().y + GoJump * dt });
 	}
 	if (moveDownKey.IsKeyDown() == true)
 	{
-		UpdatePosition({ 0, -GoJump * dt });
+		SetPosition({ GetPosition().x, GetPosition().y -GoJump * dt });
 	}
 }
 

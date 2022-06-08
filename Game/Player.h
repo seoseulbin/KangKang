@@ -65,5 +65,5 @@ private:
 	CS230::InputKey moveUpKey;
 	CS230::InputKey moveDownKey;
 
-	static constexpr double GoJump = 100;
+	static constexpr double GoJump = 1400;
 };

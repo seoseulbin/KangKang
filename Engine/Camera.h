@@ -23,6 +23,7 @@ namespace CS230
 		void SetExtent(math::irect2 newExtent);
 		void Update(const math::vec2& followObjPos);
 		math::TransformMatrix GetMatrix();
+		void Draw();
 
 	private:
 		math::irect2 extent;

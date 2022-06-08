@@ -9,6 +9,7 @@ Creation date: 04/25/2022
 -----------------------------------------------------------------*/
 #include "Camera.h"
 #include "Engine.h"
+#include <doodle/drawing.hpp>
 
 CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange) {}
 
@@ -38,6 +39,15 @@ void CS230::Camera::Update(const math::vec2& followObjPos)
 		position.x = followObjPos.x - movableRange.Right();
 	}
 
+	if (followObjPos.y < position.y + movableRange.Bottom())
+	{
+		position.y = followObjPos.y - movableRange.Bottom();
+	}
+	if (followObjPos.y > position.y + movableRange.Top())
+	{
+		position.y = followObjPos.y - movableRange.Top();
+	}
+
 	if (position.x < extent.Left())
 	{
 		position.x = extent.Left();
@@ -61,6 +71,8 @@ math::TransformMatrix CS230::Camera::GetMatrix()
 {
 	return math::TranslateMatrix(-position);
 }
+
+
 
 
 
