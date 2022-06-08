@@ -21,8 +21,8 @@ public:
 	math::vec2 GetPosition();
 	bool CanCollideWith(GameObjectType);
 	void UpdateXVelocity(double dt);
-	GameObjectType GetObjectType() { return GameObjectType::Car; }
-	std::string GetObjectTypeName() { return "Car"; }
+	GameObjectType GetObjectType() { return GameObjectType::Car1; }
+	std::string GetObjectTypeName() { return "Car1(police)"; }
 
 	int line1 = 250;
 private:

@@ -20,6 +20,7 @@ Creation date: 06/08/2022
 #include "Score.h"
 #include "../Engine/ShowCollision.h"
 #include "../Engine/Collision.h"
+#include "Hares.h"
 
 #include <iostream>
 
@@ -48,6 +49,10 @@ void Mode3::Load()
 	gameObjectManager->Add(new Car2({ 360, 1150 }));
 	gameObjectManager->Add(new Car2({ 850, 1150 }));
 	gameObjectManager->Add(new Car2({ 1150, 1150 }));
+	gameObjectManager->Add(new Hares({ 0, 1395}, { 1440, 1395 }, playerPtr));
+	gameObjectManager->Add(new Hares({ 1440, 1395 }, { 0, 1395 }, playerPtr));
+	gameObjectManager->Add(new Hares({ 200, 1650 }, { 1200, 1650 }, playerPtr));
+	gameObjectManager->Add(new Hares({ 1200, 1650 }, { 200, 1650 }, playerPtr));
 	gameObjectManager->Add(playerPtr);
 	scorePtr = new Score({ 0, Fonts::Font1 });
 	timerPtr = new Timer(60);

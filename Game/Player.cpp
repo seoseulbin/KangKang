@@ -11,6 +11,7 @@ Creation date: 06/08/2022
 #include "../Engine/Engine.h"
 #include "../Engine/Camera.h"
 #include "../Engine/Collision.h"
+#include "../Engine/ShowCollision.h"
 
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
@@ -90,15 +91,14 @@ void Player::ResolveCollision(GameObject* objectB)
 
 	switch (objectB->GetObjectType())
 	{
-	case GameObjectType::Car:
-		if (GetPosition().x > objectB->GetPosition().x)
-		{
-			hurtTimer = hurtTime;
-		}
-		else if (GetPosition().x < objectB->GetPosition().x)
-		{
-			hurtTimer = hurtTime;
-		}
+	case GameObjectType::Car1:
+		[[fallthrough]];
+	case GameObjectType::Car2:
+		[[fallthrough]];
+	case GameObjectType::Car3:
+		hurtTimer = hurtTime;
+		objectB->ResolveCollision(this);
+		SetPosition(math::vec2{ 600, 0 });
 		break;
 	}
 

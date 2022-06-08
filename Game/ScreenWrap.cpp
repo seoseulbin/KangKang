@@ -4,7 +4,9 @@
 #include "GameObjectTypes.h"
 void ScreenWrap::Update(double)
 {
-	if (object.GetObjectType() == GameObjectType::Car)
+	if (object.GetObjectType() == GameObjectType::Car1
+		|| object.GetObjectType() == GameObjectType::Car2
+		|| object.GetObjectType() == GameObjectType::Car3)
 	{
 		if (object.GetPosition().x + (object.GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) < 0)
 		{

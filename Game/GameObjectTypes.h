@@ -13,6 +13,9 @@ enum class GameObjectType {
     Particle,
     EnemyShip,
     Player,
-    Car,
+    Car1,
+    Car2,
+    Car3,
+    Hares,
     Count,
 };
