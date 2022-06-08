@@ -70,7 +70,7 @@ void Mode1::Load()
 	std::string livesString = "Lives: " + std::to_string(lives);
 	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
 
-	CS230::Camera* cameraPtr = new CS230::Camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0 } });
+	CS230::Camera* cameraPtr = new CS230::Camera({ { 0.15 * Engine::GetWindow().GetSize().x, 0 }, {0.35 * Engine::GetWindow().GetSize().x, 0.7 * Engine::GetWindow().GetSize().y } });
 	AddGSComponent(cameraPtr);
 	cameraPtr->SetExtent({ { 0,0 }, { BackGround->Size() - Engine::GetWindow().GetSize() } });
 	cameraPtr->SetPosition(math::vec2{ 0, 0 });

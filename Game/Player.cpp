@@ -44,10 +44,10 @@ void Player::Update(double dt)
 			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 - 90 });
 		SetVelocity({ GetVelocity().x, 0});
 	}
-	if ((GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - 80)
+	if ((GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y)
 	{
 		SetPosition(
-			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2 - 80 });
+			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y   });
 		SetVelocity({ 0, GetVelocity().y });
 	}
 }

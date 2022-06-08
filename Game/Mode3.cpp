@@ -25,7 +25,7 @@ void Mode3::Load()
 {
 	gameObjectManager = new CS230::GameObjectManager();
 	AddGSComponent(gameObjectManager);
-	playerPtr = new Player({ 600, -5 });
+	playerPtr = new Player({ 600, 0 });
 	gameObjectManager->Add(playerPtr);
 
 	AddGSComponent(new Background());
@@ -35,7 +35,7 @@ void Mode3::Load()
 
 
 	
-	CS230::Camera* cameraPtr = new CS230::Camera({ { 0 , 0.15 * Engine::GetWindow().GetSize().y }, { 0, 0.39 * Engine::GetWindow().GetSize().y } });
+	CS230::Camera* cameraPtr = new CS230::Camera({ { 0 , 0.03 * Engine::GetWindow().GetSize().y }, { 0, 0.5 * Engine::GetWindow().GetSize().y } });
 	AddGSComponent(cameraPtr);
 	cameraPtr->SetExtent({ { 0 ,0 }, { BGround->Size() - Engine::GetWindow().GetSize() } });
 	cameraPtr->SetPosition(math::vec2{ 0, 0});
@@ -49,6 +49,8 @@ void Mode3::Update(double dt)
 {
 	gameObjectManager->Update(dt);
 	GetGSComponent<CS230::Camera>()->Update(playerPtr->GetPosition());
+	std::cout <<"camera position : "<< -GetGSComponent<CS230::Camera>()->GetPosition().y << std::endl;
+	std::cout <<"Hero position : "<< playerPtr->GetPosition().y << std::endl;
 	if (modeNext.IsKeyReleased() == true)
 	{
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));

@@ -28,7 +28,7 @@ void Background::Draw(CS230::Camera& camera)
 	{
 		i.texturePtr->Draw(math::TranslateMatrix::TranslateMatrix
 		(
-			math::vec2{ -camera.GetPosition().x / i.level, camera.GetPosition().y }
+			math::vec2{ -camera.GetPosition().x / i.level, -camera.GetPosition().y }
 		));
 	}
 }

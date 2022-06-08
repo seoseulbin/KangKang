@@ -9,7 +9,7 @@ Creation date: 04/25/2022
 -----------------------------------------------------------------*/
 #include "Camera.h"
 #include "Engine.h"
-
+#include "../Game/Background.h"
 CS230::Camera::Camera(math::rect2 movableRange) : movableRange(movableRange) {}
 
 void CS230::Camera::SetPosition(math::vec2 newPosition)
@@ -38,17 +38,26 @@ void CS230::Camera::Update(const math::vec2& followObjPos)
 		position.x = followObjPos.x - movableRange.Right();
 	}
 
+	if (followObjPos.y < position.y - movableRange.Bottom())
+	{
+		position.y = followObjPos.y + movableRange.Bottom();
+	}
 	if (followObjPos.y > position.y + movableRange.Top())
 	{
-		position.y = followObjPos.y - movableRange.Top();
+		position.y= followObjPos.y - movableRange.Top();
 	}
-	if (followObjPos.y < position.y + movableRange.Bottom())
-	{
-		position.y = followObjPos.y - movableRange.Bottom();
-	}
+	//if (followObjPos.y < position.y - movableRange.Top()*2)
+	//{
+	//	position.y = followObjPos.y - movableRange.Top()*2;
+	//}
+	//if (followObjPos.y < position.y + movableRange.Bottom())
+	//{
+	//	position.y = followObjPos.y +movableRange.Bottom();
+	//}
 
 	if (position.x < extent.Left())
 	{
+	
 		position.x = extent.Left();
 	}
 	else if (position.x > extent.Right())
@@ -56,14 +65,19 @@ void CS230::Camera::Update(const math::vec2& followObjPos)
 		position.x = extent.Right();
 	}
 
-	if (position.y < extent.Bottom()) 
+	if (position.y > extent.Top())
 	{
-		position.y = extent.Bottom();
+		position.y =extent.Top();
 	}
-	if (position.y > extent.Top()) 
+
+	/*if (-position.y < extent.Bottom()) 
 	{
-		position.y = extent.Top();
+		position.y = 0;
 	}
+	if (-position.y > Engine::Instance().GetGSComponent<Background>()->Size().y + extent.Top() +200)
+	{
+		position.y = Engine::Instance().GetGSComponent<Background>()->Size().y + extent.Top() +200;
+	}*/
 }
 
 math::TransformMatrix CS230::Camera::GetMatrix()
