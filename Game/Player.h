@@ -25,6 +25,8 @@ public:
 	bool CanCollideWith(GameObjectType);
 	GameObjectType GetObjectType() { return GameObjectType::Player; }
 	std::string GetObjectTypeName() { return "Player"; }
+	void ResolveCollision(GameObject* objectB) override;
+	bool IsDead() { return isDead; }
 
 private:
 	class State_Stop : public State
@@ -66,4 +68,9 @@ private:
 	CS230::InputKey moveDownKey;
 
 	static constexpr double GoJump = 1000;
+	static constexpr double hurtTime = 2;
+
+	double hurtTimer;
+	bool drawPlayer;
+	bool isDead;
 };

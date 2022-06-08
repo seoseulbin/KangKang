@@ -1,2 +1,3 @@
 assets/Bus.png
 HotSpot 225 0
+CollisionRect -225 0 225 190 

@@ -15,12 +15,17 @@ Creation date: 06/08/2022
 #include "Car1.h"
 #include "Car2.h"
 #include "Car3.h"
+#include "Fonts.h"
+#include "Timer.h"
+#include "Score.h"
+#include "../Engine/ShowCollision.h"
+#include "../Engine/Collision.h"
 
 #include <iostream>
 
 
-Mode3::Mode3() : Reload(CS230::InputKey::Keyboard::R), modeNext(CS230::InputKey::Keyboard::Escape), 
-gameObjectManager(nullptr), playerPtr(nullptr), BGround(nullptr)
+Mode3::Mode3() : Reload(CS230::InputKey::Keyboard::R), modeNext(CS230::InputKey::Keyboard::Escape), lives(3),
+gameObjectManager(nullptr), playerPtr(nullptr), BGround(nullptr), timerPtr(nullptr), scorePtr(nullptr)
 {
 }
 
@@ -38,19 +43,24 @@ void Mode3::Load()
 	gameObjectManager->Add(new Car3({ 40, 705 }));
 	gameObjectManager->Add(new Car3({ 1000, 705 }));
 	gameObjectManager->Add(new Car1({ 5, 950 }, playerPtr));
-	gameObjectManager->Add(new Car1({ 550, 1190 }, playerPtr));
-	gameObjectManager->Add(new Car2({ 20, 1190 }));
-	gameObjectManager->Add(new Car2({ 320, 1190 }));
-	gameObjectManager->Add(new Car2({ 620, 1190 }));
-	gameObjectManager->Add(new Car2({ 920, 1190 }));
+	gameObjectManager->Add(new Car1({ 550, 950 }, playerPtr));
+	gameObjectManager->Add(new Car2({ 10, 1150 }));
+	gameObjectManager->Add(new Car2({ 360, 1150 }));
+	gameObjectManager->Add(new Car2({ 850, 1150 }));
+	gameObjectManager->Add(new Car2({ 1150, 1150 }));
 	gameObjectManager->Add(playerPtr);
+	scorePtr = new Score({ 0, Fonts::Font1 });
+	timerPtr = new Timer(60);
 
 	AddGSComponent(new Background());
+	AddGSComponent(scorePtr);
+	AddGSComponent(timerPtr);
 
 	BGround = GetGSComponent<Background>();
 	BGround->Add("Assets/background3.png", 1 );
 
-
+	std::string livesString = "Lives: " + std::to_string(lives);
+	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
 	
 	CS230::Camera* cameraPtr = new CS230::Camera({ { 0 , 0.03 * Engine::GetWindow().GetSize().y }, { 0, 0.35 * Engine::GetWindow().GetSize().y } });
 	AddGSComponent(cameraPtr);
@@ -58,7 +68,7 @@ void Mode3::Load()
 	cameraPtr->SetPosition(math::vec2{ 0, 0});
 
 #ifdef _DEBUG
-	
+	AddGSComponent(new ShowCollision(CS230::InputKey::Keyboard::Tilde));
 #endif
 }
 
@@ -72,12 +82,28 @@ void Mode3::Update(double dt)
 	{
 		Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
 	}
+	scorePtr->Update(dt);
+	timerPtr->Update(dt);
+
+	if (timerPtr->hasEnded() == true || playerPtr->IsDead() == true)
+	{
+		lives--;
+		if (lives == 0)
+		{
+			lives = 3;
+			Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
+		}
+		else
+		{
+			Engine::GetGameStateManager().ReloadState();
+		}
+	}
 	
 #ifdef _DEBUG
-	if (Reload.IsKeyReleased() == true) 
-	{
+	if (Reload.IsKeyReleased() == true) {
 		Engine::GetGameStateManager().ReloadState();
 	}
+	GetGSComponent<ShowCollision>()->Update(dt);
 #endif
 }
 
@@ -94,5 +120,11 @@ void Mode3::Draw()
 
 	math::TransformMatrix cameraMatrix = cameraPtr->GetMatrix();
 	gameObjectManager->DrawAll(cameraMatrix);
+
+	math::ivec2 winSize = Engine::GetWindow().GetSize();
+	timerPtr->Draw(math::ivec2{ winSize.x - 270, winSize.y - 10 });
+	scorePtr = GetGSComponent<Score>();
+	scorePtr->Draw(math::ivec2{ 10 , winSize.y - 5 });
+	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x - 830 , winSize.y - 80 }));
 }
 

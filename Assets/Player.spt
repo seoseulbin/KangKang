@@ -1,2 +1,3 @@
 Assets/Player.png
 HotSpot 80 0
+CollisionRect -50 10 70 160 

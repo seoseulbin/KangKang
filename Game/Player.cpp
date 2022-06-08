@@ -10,13 +10,15 @@ Creation date: 06/08/2022
 #include "Player.h"
 #include "../Engine/Engine.h"
 #include "../Engine/Camera.h"
+#include "../Engine/Collision.h"
 
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
 	moveLeftKey(CS230::InputKey::Keyboard::Left),
 	moveRightKey(CS230::InputKey::Keyboard::Right),
 	moveUpKey(CS230::InputKey::Keyboard::Up),
-	moveDownKey(CS230::InputKey::Keyboard::Down)
+	moveDownKey(CS230::InputKey::Keyboard::Down),
+	hurtTimer{ 0 }, drawPlayer(false), isDead(false)
 {
 	AddGOComponent(new CS230::Sprite("Assets/Player.spt", this));
 	currState = &stateStop;
@@ -26,6 +28,17 @@ Player::Player(math::vec2 startpos)
 void Player::Update(double dt)
 {
 	GameObject::Update(dt);
+
+	if (hurtTimer != 0)
+	{
+		hurtTimer -= dt;
+		drawPlayer = !drawPlayer;
+	}
+	if (hurtTimer <= 0)
+	{
+		drawPlayer = true;
+		hurtTimer = 0;
+	}
 
 	if (GetPosition().x < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 100)
 	{
@@ -54,7 +67,10 @@ void Player::Update(double dt)
 
 void Player::Draw(math::TransformMatrix displayMatrix)
 {
-	GameObject::Draw(displayMatrix);
+	if (drawPlayer == true)
+	{
+		GameObject::Draw(displayMatrix);
+	}
 }
 
 math::vec2 Player::GetPosition()
@@ -65,6 +81,27 @@ math::vec2 Player::GetPosition()
 bool Player::CanCollideWith(GameObjectType)
 {
 	return false;
+}
+
+void Player::ResolveCollision(GameObject* objectB)
+{
+	math::rect2 collideRect = objectB->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+	math::rect2 heroRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+
+	switch (objectB->GetObjectType())
+	{
+	case GameObjectType::Car:
+		if (GetPosition().x > objectB->GetPosition().x)
+		{
+			hurtTimer = hurtTime;
+		}
+		else if (GetPosition().x < objectB->GetPosition().x)
+		{
+			hurtTimer = hurtTime;
+		}
+		break;
+	}
+
 }
 
 void Player::UpdateXYVelocity(double dt)

@@ -20,6 +20,9 @@ namespace CS230
 }
 
 class Player;
+class Score;
+class Timer;
+
 class Mode3 : public CS230::GameState
 {
 public:
@@ -33,9 +36,16 @@ public:
 	std::string GetName() override { return "Mode3"; }
 
 private:
+	int lives;
+	CS230::Texture scoreTexture;
+	CS230::Texture livesTexture;
+	CS230::Texture timerTexture;
+
 	Background* BGround;
 	CS230::InputKey Reload;
 	CS230::InputKey modeNext;
 	CS230::GameObjectManager* gameObjectManager;
 	Player* playerPtr;
+	Score* scorePtr;
+	Timer* timerPtr;
 };

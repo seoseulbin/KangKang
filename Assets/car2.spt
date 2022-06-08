@@ -1,2 +1,3 @@
 assets/Car2.png
-HotSpot 105 0
+HotSpot 155 0
+CollisionRect -155 0 155 190 
