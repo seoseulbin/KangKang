@@ -41,7 +41,19 @@ void Player::Update(double dt)
 		hurtTimer = 0;
 	}
 
-	if (GetPosition().x < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 100)
+	if (GetPosition().x <= GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0)
+	{
+		SetPosition({ GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
+		SetVelocity({ 0, GetVelocity().y });
+	}
+	if (GetPosition().x + GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0 > Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x)
+	{
+		SetPosition(
+			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
+		SetVelocity({ 0, GetVelocity().y });
+	}
+
+	/*if (GetPosition().x < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 100)
 	{
 		SetPosition({ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -120, GetPosition().y });
 		SetVelocity({ 0, GetVelocity().y });
@@ -51,7 +63,7 @@ void Player::Update(double dt)
 		SetPosition(
 			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -50, GetPosition().y });
 		SetVelocity({ 0, GetVelocity().y });
-	}
+	}*/
 	if (GetPosition().y < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 90)
 	{
 		SetPosition(
@@ -87,7 +99,7 @@ bool Player::CanCollideWith(GameObjectType)
 void Player::ResolveCollision(GameObject* objectB)
 {
 	math::rect2 collideRect = objectB->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
-	math::rect2 heroRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+	math::rect2 playerRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
 
 	switch (objectB->GetObjectType())
 	{

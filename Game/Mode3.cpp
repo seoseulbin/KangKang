@@ -15,12 +15,16 @@ Creation date: 06/08/2022
 #include "Car1.h"
 #include "Car2.h"
 #include "Car3.h"
+#include "Car4.h"
 #include "Fonts.h"
 #include "Timer.h"
 #include "Score.h"
 #include "../Engine/ShowCollision.h"
 #include "../Engine/Collision.h"
 #include "Hares.h"
+#include "Coin1.h"
+#include "Coin2.h"
+#include "Coin3.h"
 
 #include <iostream>
 
@@ -45,14 +49,19 @@ void Mode3::Load()
 	gameObjectManager->Add(new Car3({ 1000, 705 }));
 	gameObjectManager->Add(new Car1({ 5, 950 }, playerPtr));
 	gameObjectManager->Add(new Car1({ 550, 950 }, playerPtr));
-	gameObjectManager->Add(new Car2({ 10, 1150 }));
-	gameObjectManager->Add(new Car2({ 360, 1150 }));
-	gameObjectManager->Add(new Car2({ 850, 1150 }));
-	gameObjectManager->Add(new Car2({ 1150, 1150 }));
+	gameObjectManager->Add(new Car4({ 10, 1150 }));
+	gameObjectManager->Add(new Car4({ 360, 1150 }));
+	gameObjectManager->Add(new Car4({ 850, 1150 }));
+	gameObjectManager->Add(new Car4({ 1150, 1150 }));
 	gameObjectManager->Add(new Hares({ 0, 1395}, { 1440, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 1440, 1395 }, { 0, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 200, 1650 }, { 1200, 1650 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 1200, 1650 }, { 200, 1650 }, playerPtr));
+	gameObjectManager->Add(new Coin1({ 100, 1820 }));
+	gameObjectManager->Add(new Coin2({ 450, 1820 }));
+	gameObjectManager->Add(new Coin3({ 750, 1820 }));
+	gameObjectManager->Add(new Coin2({ 1000, 1820 }));
+	gameObjectManager->Add(new Coin1({ 1300, 1820 }));
 	gameObjectManager->Add(playerPtr);
 	scorePtr = new Score({ 0, Fonts::Font1 });
 	timerPtr = new Timer(60);

@@ -1,7 +1,7 @@
 assets/Car1.png
-HotSpot 43 0
+HotSpot 155 0
 FrameSize 310 190
 NumFrames 2
-CollisionRect -225 0 225 190 
+CollisionRect -155 0 155 190 
 Anim assets/none.anm
 Anim assets/brightPolice.anm

@@ -131,6 +131,18 @@
     <ClCompile Include="Game\Hares.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Car4.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Coin1.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Coin2.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Coin3.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -321,6 +333,21 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Hares_Anims.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Car4.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Coin1.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Coin_Anim.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Coin2.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Coin3.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

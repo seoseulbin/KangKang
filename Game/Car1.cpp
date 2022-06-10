@@ -39,10 +39,7 @@ void Car1::UpdateXVelocity(double dt)
 void Car1::State_Drive::Enter(GameObject* object) 
 {
 	Car1* car1 = static_cast<Car1*>(object);
-	if (car1->playerPtr->GetPosition().y >= 200 || car1->playerPtr->GetPosition().y <= 350)
-	{
-		car1->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Car1_Anims::Bright_Anim));
-	}
+	car1->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Car1_Anims::Bright_Anim));
 }
 
 void Car1::State_Drive::Update(GameObject* object, double dt)
