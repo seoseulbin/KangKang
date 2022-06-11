@@ -1,10 +1,16 @@
 assets/Hares.png
-HotSpot 90 0
-FrameSize 180 180
+HotSpot 75 0
+FrameSize 150 160
 Frame 0 0
-Frame 180 0
-Frame 360 0
-Frame 540 0
-CollisionRect -90 0 90 180 
+Frame 150 0
+Frame 300 0
+Frame 450 0
+Frame 600 0
+Frame 750 0
+Frame 900 0
+Frame 1050 0
+Frame 1200 0
+CollisionRect -75 0 75 160 
 Anim assets/Hares_HangAround.anm
+Anim Assets/Hares_Angey.anm
 Anim assets/Hares_FallDown.anm

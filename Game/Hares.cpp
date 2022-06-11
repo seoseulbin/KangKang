@@ -34,7 +34,7 @@ void Hares::ResolveCollision(GameObject* objectA)
 void Hares::State_HangAround::Enter(GameObject* object)
 {
 	Hares* hares = static_cast<Hares*>(object);
-	hares->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hares_Anims::Hares_FallDown));
+	hares->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hares_Anims::Hares_HangAround));
 	if (hares->GetPosition().x < hares->patrolNodes[hares->currPatrolNode])
 	{
 		hares->SetScale(math::vec2{ 1.0, 1.0 });
