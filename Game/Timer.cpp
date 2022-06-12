@@ -13,11 +13,20 @@ Creation date: 5/09/2022
 
 Timer::Timer(int time) : timer(time)
 {
+	timeStop = false;
 }
 
 void Timer::Update(double dt)
 {
-	timer -= dt;
+	if (timeStop == false)
+	{
+		timer -= dt;
+	}
+	else if (timeStop == true)
+	{
+		timer = 60;
+	}
+
 	if (static_cast<int>(timer))
 	{
 		std::string timetexture = "Time: " + std::to_string(static_cast<int>(timer + 1));

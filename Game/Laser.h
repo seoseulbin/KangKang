@@ -20,10 +20,11 @@ class Laser : public CS230::GameObject {
 public:
     static constexpr math::vec2 LaserVelocity = math::vec2{ 0, 600 };
 
-    Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity);
+    Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity, int modeNum);
     void Update(double dt) override;
     std::string GetObjectTypeName() { return "Laser"; }
     virtual GameObjectType GetObjectType() override { return GameObjectType::Laser; }
     virtual bool CanCollideWith(GameObjectType objectBType) override;
     void ResolveCollision(GameObject* objectB) override;
+
 };

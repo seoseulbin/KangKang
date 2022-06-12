@@ -11,12 +11,12 @@ Creation date: 06/10/2022
 #include "..\Engine\GameObject.h"
 #include "GameObjectTypes.h"
 
-class Coin1 : public CS230::GameObject
+class Coin : public CS230::GameObject
 {
 public:
-    Coin1(math::vec2 startPos);
-    GameObjectType GetObjectType() { return GameObjectType::Coin1; }
-    std::string GetObjectTypeName() { return "Coin1"; }
+    Coin(math::vec2 startPos, int coinNum);
+    GameObjectType GetObjectType() { return GameObjectType::Coin; }
+    std::string GetObjectTypeName() { return "Coin"; }
     bool CanCollideWith(GameObjectType objectBType) override;
     void ResolveCollision(GameObject* objectB) override;
 
@@ -32,4 +32,5 @@ private:
     Rotate stateRotate;
 
     static constexpr double bounceVelocity = 600;
+    int CoinNum;
 };

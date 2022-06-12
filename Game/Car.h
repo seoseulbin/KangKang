@@ -2,7 +2,7 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Car2.h
+File Name: Car1.h
 Project: CS230
 Author: Seulbin Seo
 Creation date: 06/08/2022
@@ -14,26 +14,39 @@ Creation date: 06/08/2022
 
 class Player;
 
-class Car2 : public CS230::GameObject
+class Car : public CS230::GameObject
 {
 public:
-	Car2(math::vec2 pos);
+	Car(math::vec2 pos,  int CarNum);
 	math::vec2 GetPosition();
 	bool CanCollideWith(GameObjectType);
 	void UpdateXVelocity(double dt);
-	GameObjectType GetObjectType() { return GameObjectType::Car2; }
-	std::string GetObjectTypeName() { return "Car2(blue)"; }
+	GameObjectType GetObjectType() { return GameObjectType::Car; }
+	std::string GetObjectTypeName() { return "Car"; }
+	int GetCarNum();
 
-	int line1 = 250;
+	int line1 = 215;
+	int line2 = 460;
+	int line3 = 705;
+	int line4 = 950;
+	int line5 = 1150;
+
 private:
-	class State_Drive2 : public State {
+	class State_Drive : public State {
 	public:
 		void Enter(GameObject* object) override;
 		void Update(GameObject* object, double dt) override;
 		void TestForExit(GameObject* object) override;
 		std::string GetName() override { return "Drive"; }
 	};
-	State_Drive2  stateDrive2;
+	State_Drive  stateDrive;
 
-	double drive_vel = 6500;
-};
+	Player* playerPtr;
+	int CarNumber;
+	
+	double drive_vel1 = 5900;
+	double drive_vel2 = 6500;
+	double drive_vel3 = 8000;
+	double drive_vel4 = 7000;
+	double drive_vel5 = 7000;
+}; 

@@ -10,11 +10,21 @@ Creation date: 5/25/2022
 #include "Laser.h"
 #include "../Engine/Engine.h"
 #include "../Engine/Collision.h"
+#include "Screens.h"
+#include "../Engine/GameObjectManager.h"
 
-Laser::Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity)
+Laser::Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity, int modeNum)
 	:GameObject(pos, rotation, scale)
 {
-	AddGOComponent(new CS230::Sprite("assets/Laser.spt", this));
+	if (modeNum == 2)
+	{
+		AddGOComponent(new CS230::Sprite("assets/Laser.spt", this));
+	}
+	else if (modeNum == 3)
+	{
+		AddGOComponent(new CS230::Sprite("assets/Laser1.spt", this));
+	}
+
 	SetVelocity(laserVelocity);
 }
 
@@ -37,6 +47,10 @@ bool Laser::CanCollideWith(GameObjectType objectBType)
 		return true;
 	}
 	if (objectBType == GameObjectType::EnemyShip)
+	{
+		return true;
+	}
+	if (objectBType == GameObjectType::Hares)
 	{
 		return true;
 	}

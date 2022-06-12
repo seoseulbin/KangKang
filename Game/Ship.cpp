@@ -69,10 +69,10 @@ void Ship::Update(double dt)
 		{
 			Engine::GetGSComponent<CS230::GameObjectManager>()->
 				Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-					GetHotSpot(3)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity));
+					GetHotSpot(3)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 2));
 			Engine::GetGSComponent<CS230::GameObjectManager>()->
 				Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-					GetHotSpot(4)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity));
+					GetHotSpot(4)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 2));
 		}
 	}
 	UpdateVelocity(-(GetVelocity() * Ship::drag * dt));

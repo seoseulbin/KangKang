@@ -12,10 +12,11 @@ Creation date: 06/08/2022
 #include "../Engine/Camera.h"
 #include "../Engine/Collision.h"
 #include "../Engine/ShowCollision.h"
-
+#include "../Engine/GameObjectManager.h"
 #include "Screens.h"
 #include "Player_Anims.h"
 #include "GameObjectTypes.h"
+#include "Laser.h"
 
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
@@ -23,10 +24,13 @@ Player::Player(math::vec2 startpos)
 	moveRightKey(CS230::InputKey::Keyboard::Right),
 	moveUpKey(CS230::InputKey::Keyboard::Up),
 	moveDownKey(CS230::InputKey::Keyboard::Down),
+	ShootKey(CS230::InputKey::Keyboard::Space),
 	hurtTimer{ 0 }, drawPlayer(false), isDead(false)
 {
 
 	AddGOComponent(new CS230::Sprite("Assets/Player.spt", this));
+	AddGOComponent(new CS230::Sprite("Assets/Laser1.spt", leftLaser));
+	AddGOComponent(new CS230::Sprite("Assets/Laser1.spt", rightLaser));
 	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Idle_Anim));
 	currState = &stateStop;
 	currState->Enter(this);
@@ -70,6 +74,16 @@ void Player::Update(double dt)
 			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y   });
 		SetVelocity({ 0, GetVelocity().y });
 	}
+
+	if (ShootKey.IsKeyReleased() == true && isDead == false)
+	{
+		Engine::GetGSComponent<CS230::GameObjectManager>()->
+			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
+				GetHotSpot(1)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 3));
+		Engine::GetGSComponent<CS230::GameObjectManager>()->
+			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
+				GetHotSpot(2)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 3));
+	}
 }
 
 void Player::Draw(math::TransformMatrix displayMatrix)
@@ -87,9 +101,7 @@ math::vec2 Player::GetPosition()
 
 bool Player::CanCollideWith(GameObjectType objectB)
 {
-	if (objectB == GameObjectType::Coin1
-		|| objectB == GameObjectType::Coin2
-		|| objectB == GameObjectType::Coin3)
+	if (objectB == GameObjectType::Coin)
 	{
 		return true;
 	}
@@ -103,26 +115,12 @@ void Player::ResolveCollision(GameObject* objectB)
 
 	switch (objectB->GetObjectType())
 	{
-	case GameObjectType::Car1:
-		[[fallthrough]];
-	case GameObjectType::Car2:
-		[[fallthrough]];
-	case GameObjectType::Car3:
-		[[fallthrough]];
-	case GameObjectType::Car4:
+	case GameObjectType::Car:
 		hurtTimer = hurtTime;
 		objectB->ResolveCollision(this);
 		SetPosition(math::vec2{ 600, 0 });
 		break;
-	case GameObjectType::Coin1:
-		objectB->ResolveCollision(this);
-		isReallyEscape = true;
-		break;
-	case GameObjectType::Coin2:
-		objectB->ResolveCollision(this);
-		isReallyEscape = true;
-		break;
-	case GameObjectType::Coin3:
+	case GameObjectType::Coin:
 		objectB->ResolveCollision(this);
 		isReallyEscape = true;
 		break;

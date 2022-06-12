@@ -13,9 +13,6 @@ Creation date: 06/08/2022
 #include "..\Engine\Camera.h"
 #include "Background.h"
 #include "..\Engine\GameObjectManager.h"
-#include "Coin1.h"
-#include "Coin2.h"
-#include "Coin3.h"
 
 namespace CS230
 {

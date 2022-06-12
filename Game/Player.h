@@ -71,6 +71,8 @@ private:
 
 	void UpdateXYVelocity(double dt);
 
+	GameObject* leftLaser;
+	GameObject* rightLaser;
 	State_Stop stateStop;
 	State_walking stateWalking;
 	State_Jumping stateJumping;
@@ -80,6 +82,7 @@ private:
 	CS230::InputKey moveRightKey;
 	CS230::InputKey moveUpKey;
 	CS230::InputKey moveDownKey;
+	CS230::InputKey ShootKey;
 
 	static constexpr double GoJump = 800;
 	static constexpr double hurtTime = 2;

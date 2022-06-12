@@ -1,5 +1,7 @@
 Assets/Player.png
 HotSpot 80 0
+HotSpot 10 0
+HotSpot 140 0
 FrameSize 160 160
 Frame 0 0
 Frame 160 0

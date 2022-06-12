@@ -12,20 +12,14 @@ Creation date: 06/08/2022
 #include "Mode3.h"
 #include "Player.h"
 #include "Background.h"
-#include "Car1.h"
-#include "Car2.h"
-#include "Car3.h"
-#include "Car4.h"
-#include "Car5.h"
+#include "Car.h"
 #include "Fonts.h"
 #include "Timer.h"
 #include "Score.h"
 #include "../Engine/ShowCollision.h"
 #include "../Engine/Collision.h"
 #include "Hares.h"
-#include "Coin1.h"
-#include "Coin2.h"
-#include "Coin3.h"
+#include "Coin.h"
 
 #include <iostream>
 
@@ -40,29 +34,29 @@ void Mode3::Load()
 	gameObjectManager = new CS230::GameObjectManager();
 	AddGSComponent(gameObjectManager);
 	playerPtr = new Player({ 600, 0 });
-	gameObjectManager->Add(new Car1({ 30, 460 }));
-	gameObjectManager->Add(new Car1({ 350, 460 }));
-	gameObjectManager->Add(new Car1({ 850, 460 }));
-	gameObjectManager->Add(new Car2({ 40, 215 }));
-	gameObjectManager->Add(new Car2({ 490, 215 }));
-	gameObjectManager->Add(new Car2({ 1000, 215 }));
-	gameObjectManager->Add(new Car3({ 40, 705 }));
-	gameObjectManager->Add(new Car3({ 1000, 705 }));
-	gameObjectManager->Add(new Car5({ 20, 950 }));
-	gameObjectManager->Add(new Car5({ 750, 950 }));
-	gameObjectManager->Add(new Car4({ 5, 1150 }));
-	gameObjectManager->Add(new Car4({ 580, 1150 }));
-	gameObjectManager->Add(new Car4({ 950, 1150 }));
-	gameObjectManager->Add(new Car4({ 1320, 1150 }));
+	gameObjectManager->Add(new Car({ 30, 460 }, 1));
+	gameObjectManager->Add(new Car({ 350, 460 }, 1));
+	gameObjectManager->Add(new Car({ 850, 460 }, 1));
+	gameObjectManager->Add(new Car({ 40, 215 }, 2));
+	gameObjectManager->Add(new Car({ 490, 215 }, 2));
+	gameObjectManager->Add(new Car({ 1000, 215 }, 2));
+	gameObjectManager->Add(new Car({ 40, 705 }, 3));
+	gameObjectManager->Add(new Car({ 1000, 705 }, 3));
+	gameObjectManager->Add(new Car({ 20, 950 }, 5));
+	gameObjectManager->Add(new Car({ 750, 950 }, 5));
+	gameObjectManager->Add(new Car({ 5, 1150 }, 4));
+	gameObjectManager->Add(new Car({ 580, 1150 }, 4));
+	gameObjectManager->Add(new Car({ 950, 1150 }, 4));
+	gameObjectManager->Add(new Car({ 1320, 1150 }, 4));
 	gameObjectManager->Add(new Hares({ 0, 1395}, { 1440, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 1440, 1395 }, { 0, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 200, 1650 }, { 1200, 1650 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 1200, 1650 }, { 200, 1650 }, playerPtr));
-	gameObjectManager->Add(new Coin1({ 100, 1850 }));
-	gameObjectManager->Add(new Coin2({ 410, 1850 }));
-	gameObjectManager->Add(new Coin3({ 730, 1850 }));
-	gameObjectManager->Add(new Coin2({ 1020, 1850 }));
-	gameObjectManager->Add(new Coin1({ 1320, 1850 }));
+	gameObjectManager->Add(new Coin({ 100, 1850 }, 1));
+	gameObjectManager->Add(new Coin({ 410, 1850 }, 2));
+	gameObjectManager->Add(new Coin({ 730, 1850 }, 3));
+	gameObjectManager->Add(new Coin({ 1020, 1850 }, 2));
+	gameObjectManager->Add(new Coin({ 1320, 1850 }, 1));
 	gameObjectManager->Add(playerPtr);
 	scorePtr = new Score({ 0, Fonts::Font1 });
 	timerPtr = new Timer(60);

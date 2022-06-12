@@ -17,7 +17,10 @@ public:
     void Update(double dt) override;
     void Draw(math::ivec2 location);
     bool hasEnded();
+    bool GetTimeStop() { return timeStop; }
+    void SetTimeStop(bool timestop) { timestop = timeStop; }
 private:
     double timer;
+    bool timeStop;
     CS230::Texture timeTexture;
 };

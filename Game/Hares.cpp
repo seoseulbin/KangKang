@@ -96,7 +96,7 @@ void Hares::State_FallDown::Enter(GameObject* object)
 	hares->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hares_Anims::Hares_FallDown));
 	hares->SetVelocity(math::vec2{ 0, 0 });
 
-	Engine::GetGSComponent<Score>()->AddScore(100);
+	Engine::GetGSComponent<Score>()->AddScore(10);
 }
 
 void Hares::State_FallDown::Update(GameObject* , double) {}
