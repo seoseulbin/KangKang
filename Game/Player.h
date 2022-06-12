@@ -27,6 +27,10 @@ public:
 	std::string GetObjectTypeName() { return "Player"; }
 	void ResolveCollision(GameObject* objectB) override;
 	bool IsDead() { return isDead; }
+	void SetIsReallyDead(bool isreallydead) {  isReallyDead = isreallydead; }
+	bool GetIsReallyDead() { return isReallyDead; }
+	void SetEscape(bool isEscape) { isReallyEscape = isEscape; }
+	bool GetEscape() { return isReallyEscape; }
 
 private:
 	class State_Stop : public State
@@ -38,7 +42,16 @@ private:
 		std::string GetName() override { return "stop"; }
 	};
 
-	class State_sidewayJumping : public State
+	class State_walking : public State
+	{
+	public:
+		virtual void Enter(GameObject* object) override;
+		virtual void Update(GameObject* object, double dt) override;
+		virtual void TestForExit(GameObject* object) override;
+		std::string GetName() override { return "waling"; }
+	};
+
+	class State_Jumping : public State
 	{
 	public:
 		virtual void Enter(GameObject* object) override;
@@ -59,7 +72,8 @@ private:
 	void UpdateXYVelocity(double dt);
 
 	State_Stop stateStop;
-	State_sidewayJumping stateSidewayJumping;
+	State_walking stateWalking;
+	State_Jumping stateJumping;
 	State_GoBackJumping stateGoBackJumping;
 
 	CS230::InputKey moveLeftKey;
@@ -67,10 +81,12 @@ private:
 	CS230::InputKey moveUpKey;
 	CS230::InputKey moveDownKey;
 
-	static constexpr double GoJump = 1000;
+	static constexpr double GoJump = 800;
 	static constexpr double hurtTime = 2;
 
 	double hurtTimer;
 	bool drawPlayer;
 	bool isDead;
+	bool isReallyDead;
+	bool isReallyEscape;
 };

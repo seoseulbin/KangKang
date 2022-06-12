@@ -17,6 +17,7 @@ enum class GameObjectType {
     Car2,
     Car3,
     Car4,
+    Car5,
     Coin1,
     Coin2,
     Coin3,

@@ -16,6 +16,7 @@ Creation date: 06/08/2022
 #include "Car2.h"
 #include "Car3.h"
 #include "Car4.h"
+#include "Car5.h"
 #include "Fonts.h"
 #include "Timer.h"
 #include "Score.h"
@@ -39,20 +40,20 @@ void Mode3::Load()
 	gameObjectManager = new CS230::GameObjectManager();
 	AddGSComponent(gameObjectManager);
 	playerPtr = new Player({ 600, 0 });
-	gameObjectManager->Add(new Car1({ 30, 460 }, playerPtr));
-	gameObjectManager->Add(new Car1({ 350, 460 }, playerPtr));
-	gameObjectManager->Add(new Car1({ 850, 460 }, playerPtr));
+	gameObjectManager->Add(new Car1({ 30, 460 }));
+	gameObjectManager->Add(new Car1({ 350, 460 }));
+	gameObjectManager->Add(new Car1({ 850, 460 }));
 	gameObjectManager->Add(new Car2({ 40, 215 }));
 	gameObjectManager->Add(new Car2({ 490, 215 }));
 	gameObjectManager->Add(new Car2({ 1000, 215 }));
 	gameObjectManager->Add(new Car3({ 40, 705 }));
 	gameObjectManager->Add(new Car3({ 1000, 705 }));
-	gameObjectManager->Add(new Car1({ 5, 950 }, playerPtr));
-	gameObjectManager->Add(new Car1({ 550, 950 }, playerPtr));
-	gameObjectManager->Add(new Car4({ 10, 1150 }));
-	gameObjectManager->Add(new Car4({ 410, 1150 }));
-	gameObjectManager->Add(new Car4({ 850, 1150 }));
-	gameObjectManager->Add(new Car4({ 1150, 1150 }));
+	gameObjectManager->Add(new Car5({ 20, 950 }));
+	gameObjectManager->Add(new Car5({ 750, 950 }));
+	gameObjectManager->Add(new Car4({ 5, 1150 }));
+	gameObjectManager->Add(new Car4({ 580, 1150 }));
+	gameObjectManager->Add(new Car4({ 950, 1150 }));
+	gameObjectManager->Add(new Car4({ 1320, 1150 }));
 	gameObjectManager->Add(new Hares({ 0, 1395}, { 1440, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 1440, 1395 }, { 0, 1395 }, playerPtr));
 	gameObjectManager->Add(new Hares({ 200, 1650 }, { 1200, 1650 }, playerPtr));
@@ -72,6 +73,12 @@ void Mode3::Load()
 
 	BGround = GetGSComponent<Background>();
 	BGround->Add("Assets/background3.png", 1 );
+
+	GameOverTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture("You Lose !", 0xFFFFFFFF, true);
+	RestartTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture("Press r to restart !", 0xFFFFFFFF, true);
+
+	WinTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture("Congratulation! You win!!", 0xFFFFFFFF, true);
+	FinalScoreTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture("Your score is : " + std::to_string(scorePtr->GetScore()), 0xFFFFFFFF, true);
 
 	std::string livesString = "Lives: " + std::to_string(lives);
 	livesTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(livesString, 0xFFFFFFFF, true);
@@ -99,18 +106,26 @@ void Mode3::Update(double dt)
 	scorePtr->Update(dt);
 	timerPtr->Update(dt);
 
-	if (timerPtr->hasEnded() == true || playerPtr->IsDead() == true)
+	if (timerPtr->hasEnded() == true)
 	{
-		lives--;
+		lives -= 1;
 		if (lives == 0)
 		{
-			lives = 3;
-			Engine::GetGameStateManager().SetNextState(static_cast<int>(Screens::MainMenu));
+			playerPtr->SetIsReallyDead(true);
+			if (playerPtr->GetIsReallyDead() == true)
+			{
+				if (Reload.IsKeyDown() == true)
+				{
+					lives = 3;
+					Engine::GetGameStateManager().ReloadState();
+				}
+			}
+			
 		}
-		else
+		/*else
 		{
 			Engine::GetGameStateManager().ReloadState();
-		}
+		}*/
 	}
 	
 #ifdef _DEBUG
@@ -140,5 +155,17 @@ void Mode3::Draw()
 	scorePtr = GetGSComponent<Score>();
 	scorePtr->Draw(math::ivec2{ 10 , winSize.y - 5 });
 	livesTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x - 830 , winSize.y - 80 }));
+
+	if (playerPtr->GetIsReallyDead() == true)
+	{
+		GameOverTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x / 2 - GameOverTexture.GetSize().x / 2, winSize.y / 2 }));
+		RestartTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x / 2 - GameOverTexture.GetSize().x / 2, winSize.y / 2 - GameOverTexture.GetSize().y }));
+	}
+
+	if (playerPtr->GetEscape() == true)
+	{
+		WinTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x / 2 - WinTexture.GetSize().x / 2, winSize.y / 2 }));
+		FinalScoreTexture.Draw(math::TranslateMatrix(math::ivec2{ winSize.x / 2 - FinalScoreTexture.GetSize().x / 2, winSize.y / 2 - FinalScoreTexture.GetSize().y }));
+	}
 }
 

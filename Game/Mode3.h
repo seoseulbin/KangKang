@@ -13,6 +13,9 @@ Creation date: 06/08/2022
 #include "..\Engine\Camera.h"
 #include "Background.h"
 #include "..\Engine\GameObjectManager.h"
+#include "Coin1.h"
+#include "Coin2.h"
+#include "Coin3.h"
 
 namespace CS230
 {
@@ -44,6 +47,10 @@ private:
 	Background* BGround;
 	CS230::InputKey Reload;
 	CS230::InputKey modeNext;
+	CS230::Texture GameOverTexture;
+	CS230::Texture RestartTexture;
+	CS230::Texture WinTexture;
+	CS230::Texture FinalScoreTexture;
 	CS230::GameObjectManager* gameObjectManager;
 	Player* playerPtr;
 	Score* scorePtr;

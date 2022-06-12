@@ -9,6 +9,9 @@ Creation date: 6/10/2022
 -----------------------------------------------------------------*/
 #include "Coin2.h"
 #include "Coin_Anim.h"
+#include "../Engine/Engine.h"
+#include "Score.h"
+#include "../Engine/Collision.h"
 
 Coin2::Coin2(math::vec2 startPos) : GameObject(startPos)
 {
@@ -22,8 +25,13 @@ bool Coin2::CanCollideWith(GameObjectType)
 	return false;
 }
 
-void Coin2::ResolveCollision(GameObject*)
+void Coin2::ResolveCollision(GameObject* object)
 {
+	if (object->GetObjectType() == GameObjectType::Player)
+	{
+		Engine::GetGSComponent<Score>()->AddScore(45);
+		RemoveGOComponent<CS230::Collision>();
+	}
 }
 
 void Coin2::Rotate::Enter(GameObject* object)

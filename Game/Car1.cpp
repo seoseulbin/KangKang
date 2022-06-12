@@ -12,7 +12,7 @@ Creation date: 6/08/2022
 #include "Car1_Anims.h"
 #include "Player.h"
 
-Car1::Car1(math::vec2 pos, Player* playerPtr) : GameObject(pos), playerPtr(playerPtr)
+Car1::Car1(math::vec2 pos) : GameObject(pos)
 {
 	AddGOComponent(new CS230::Sprite("assets/Car1.spt", this));
 	AddGOComponent(new ScreenWrap(*this));

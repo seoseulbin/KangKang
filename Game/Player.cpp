@@ -13,6 +13,10 @@ Creation date: 06/08/2022
 #include "../Engine/Collision.h"
 #include "../Engine/ShowCollision.h"
 
+#include "Screens.h"
+#include "Player_Anims.h"
+#include "GameObjectTypes.h"
+
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
 	moveLeftKey(CS230::InputKey::Keyboard::Left),
@@ -21,7 +25,9 @@ Player::Player(math::vec2 startpos)
 	moveDownKey(CS230::InputKey::Keyboard::Down),
 	hurtTimer{ 0 }, drawPlayer(false), isDead(false)
 {
+
 	AddGOComponent(new CS230::Sprite("Assets/Player.spt", this));
+	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Idle_Anim));
 	currState = &stateStop;
 	currState->Enter(this);
 }
@@ -52,18 +58,6 @@ void Player::Update(double dt)
 			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
 		SetVelocity({ 0, GetVelocity().y });
 	}
-
-	/*if (GetPosition().x < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 100)
-	{
-		SetPosition({ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -120, GetPosition().y });
-		SetVelocity({ 0, GetVelocity().y });
-	}
-	if ((GetPosition().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - 50)
-	{
-		SetPosition(
-			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 -50, GetPosition().y });
-		SetVelocity({ 0, GetVelocity().y });
-	}*/
 	if (GetPosition().y < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 90)
 	{
 		SetPosition(
@@ -91,8 +85,14 @@ math::vec2 Player::GetPosition()
 	return GameObject::GetPosition();
 }
 
-bool Player::CanCollideWith(GameObjectType)
+bool Player::CanCollideWith(GameObjectType objectB)
 {
+	if (objectB == GameObjectType::Coin1
+		|| objectB == GameObjectType::Coin2
+		|| objectB == GameObjectType::Coin3)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -108,9 +108,23 @@ void Player::ResolveCollision(GameObject* objectB)
 	case GameObjectType::Car2:
 		[[fallthrough]];
 	case GameObjectType::Car3:
+		[[fallthrough]];
+	case GameObjectType::Car4:
 		hurtTimer = hurtTime;
 		objectB->ResolveCollision(this);
 		SetPosition(math::vec2{ 600, 0 });
+		break;
+	case GameObjectType::Coin1:
+		objectB->ResolveCollision(this);
+		isReallyEscape = true;
+		break;
+	case GameObjectType::Coin2:
+		objectB->ResolveCollision(this);
+		isReallyEscape = true;
+		break;
+	case GameObjectType::Coin3:
+		objectB->ResolveCollision(this);
+		isReallyEscape = true;
 		break;
 	}
 
@@ -136,8 +150,10 @@ void Player::UpdateXYVelocity(double dt)
 	}
 }
 
-void Player::State_Stop::Enter(GameObject* )
+void Player::State_Stop::Enter(GameObject* object)
 {
+	Player* player = static_cast<Player*>(object);
+	player->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Idle_Anim));
 }
 
 void Player::State_Stop::Update(GameObject* , double )
@@ -149,38 +165,73 @@ void Player::State_Stop::TestForExit(GameObject* object)
 	Player* player = static_cast<Player*>(object);
 	if (player->moveUpKey.IsKeyDown() == true || player->moveDownKey.IsKeyDown() == true)
 	{
-		player->ChangeState(&player->stateGoBackJumping);
+		player->ChangeState(&player->stateJumping);
 	}
 	if (player->moveLeftKey.IsKeyDown() == true || player->moveRightKey.IsKeyDown() == true)
 	{
-		player->ChangeState(&player->stateSidewayJumping);
+		player->ChangeState(&player->stateWalking);
 	}
 }
 
-void Player::State_sidewayJumping::Enter(GameObject*)
+void Player::State_walking::Enter(GameObject* object)
 {
-	//점프하는 애니메이션 넣기
+	Player* player = static_cast<Player*>(object);
+	player->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Walk_Anim));
+	if (player->moveLeftKey.IsKeyDown() == true)
+	{
+		player->SetScale({ -1.0, 1.0 });
+	}
+	else if (player->moveRightKey.IsKeyDown() == true)
+	{
+		player->SetScale({ 1.0, 1.0 });
+	}
 }
 
-void Player::State_sidewayJumping::Update(GameObject* object, double dt)
+void Player::State_walking::Update(GameObject* object, double dt)
 {
 	Player* player = static_cast<Player*>(object);
 	player->UpdateXYVelocity(dt);
 }
 
-void Player::State_sidewayJumping::TestForExit(GameObject* object)
+void Player::State_walking::TestForExit(GameObject* object)
 {
 	Player* player = static_cast<Player*>(object);
 	if (player->moveUpKey.IsKeyDown() == true || player->moveDownKey.IsKeyDown() == true)
 	{
-		player->ChangeState(&player->stateGoBackJumping);
+		player->ChangeState(&player->stateJumping);
 	}
-	player->ChangeState(&player->stateStop);
+	if (player->moveLeftKey.IsKeyReleased() == true || player->moveRightKey.IsKeyReleased() == true)
+	{
+		player->ChangeState(&player->stateStop);
+	}
 }
 
-void Player::State_GoBackJumping::Enter(GameObject*)
+
+void Player::State_Jumping::Enter(GameObject* object)
 {
-	//옆으로 점프 애니메이션 넣기
+	Player* player = static_cast<Player*>(object);
+	player->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Jump_Anim));
+}
+
+void Player::State_Jumping::Update(GameObject* object, double dt)
+{
+	Player* player = static_cast<Player*>(object);
+	player->UpdateXYVelocity(dt);
+}
+
+void Player::State_Jumping::TestForExit(GameObject* object)
+{
+	Player* player = static_cast<Player*>(object);
+	if (player->moveUpKey.IsKeyReleased() == true || player->moveDownKey.IsKeyReleased() == true)
+	{
+		player->ChangeState(&player->stateStop);
+	}
+}
+
+void Player::State_GoBackJumping::Enter(GameObject* object)
+{
+	Player* player = static_cast<Player*>(object);
+	player->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Player_Anims::Player_Dead_Anim));
 }
 
 void Player::State_GoBackJumping::Update(GameObject* object, double dt)
@@ -194,6 +245,6 @@ void Player::State_GoBackJumping::TestForExit(GameObject* object)
 	Player* player = static_cast<Player*>(object);
 	if (player->moveLeftKey.IsKeyDown() == true || player->moveRightKey.IsKeyDown() == true)
 	{
-		player->ChangeState(&player->stateSidewayJumping);
+		player->ChangeState(&player->stateWalking);
 	}
 }

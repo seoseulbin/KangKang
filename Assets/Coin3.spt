@@ -1,6 +1,7 @@
 assets/Coin3.png
 HotSpot 80 0
 FrameSize 160 160
+NumFrames 11
 Frame 0 0
 Frame 160 0
 Frame 320 0

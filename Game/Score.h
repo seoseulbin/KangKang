@@ -18,6 +18,8 @@ public:
     Score(int startingScore, Fonts fontToUse);
     void AddScore(int newPoints);
     void Draw(math::ivec2 location);
+    unsigned int GetScore() { return score; }
+    void SetScore(unsigned int finalScore) { score = finalScore; }
 private:
     void RenderText();
 
