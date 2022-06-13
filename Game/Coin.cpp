@@ -4,7 +4,7 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Coin.cpp
 Project: CS230 final project
-Author: Seulbin Seo & Junsung Park
+Author: Seulbin Seo & Junseong Park
 Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Coin.h"

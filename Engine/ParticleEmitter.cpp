@@ -63,13 +63,17 @@ void CS230::ParticleEmitter::Emit(int number, math::vec2 position, math::vec2 em
 		{
 			Engine::GetLogger().LogError("Overwrite a particle");
 		}
-	}
-	particleMemoryPool[particleIndexToUse++]->Revive(position, emitterVelocity, lifetime);
-	double randomAngle = rand() % static_cast<int>(spread / 2.0 - (-spread / 2.0) + 1.0) + static_cast<int>(-spread / 2.0);
-	math::vec2 randomVelocity = math::RotateMatrix(randomAngle) * emitVector * (((rand() % 1024) / 2048.0f) + 0.5f) + emitterVelocity;
-	particleMemoryPool[particleIndexToUse++]->Revive(position, randomVelocity, lifetime);
-	if (particleIndexToUse >= particleMemoryPool.size()) 
-	{
-		particleIndexToUse = 0;
+
+		//particleMemoryPool[particleIndexToUse++]->Revive(position, emitterVelocity, lifetime);
+		double randomAngle = rand() % static_cast<int>(spread / 2.0 - (-spread / 2.0) + 1.0) + static_cast<int>(-spread / 2.0);
+		double m = ((rand() % 1024) / 2048.0f) + 0.5f;
+		math::vec2 randomVelocity = math::RotateMatrix(randomAngle) * emitVector + emitterVelocity;
+		randomVelocity *= m;
+
+		particleMemoryPool[particleIndexToUse++]->Revive(position, randomVelocity, lifetime);
+		if (particleIndexToUse >= particleMemoryPool.size())
+		{
+			particleIndexToUse = 0;
+		}
 	}
 }

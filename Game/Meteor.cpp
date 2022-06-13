@@ -21,7 +21,9 @@ Meteor::Meteor() : GameObject({ 0, 0 }), health(100), size(1)
 {
 	AddGOComponent(new CS230::Sprite("assets/Meteor.spt", this));
 	AddGOComponent(new ScreenWrap(*this));
-	SetPosition(math::vec2{ static_cast<double>(rand() % Engine::GetWindow().GetSize().x), static_cast<double>(rand() % Engine::GetWindow().GetSize().y) });
+	SetPosition
+	
+	(math::vec2{ static_cast<double>(rand() % Engine::GetWindow().GetSize().x), static_cast<double>(rand() % Engine::GetWindow().GetSize().y) });
 	SetRotation(rand() / (RAND_MAX / ((2 * PI) - 0)));
 	SetVelocity({ static_cast<double>((-100) + rand() / (RAND_MAX / (200))), static_cast<double>((-100) + rand() / (RAND_MAX / (200))) });
 	GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Meteor_Anim::None_Anim));
@@ -70,7 +72,11 @@ void Meteor::ResolveCollision(GameObject* objectB)
 	{
 		math::vec2 VecterPosition = objectB->GetPosition() - GetPosition();
 		Engine::GetGSComponent<HitEmitter>()->Emit(1, VecterPosition.Normalize() * GetGOComponent<CS230::CircleCollision>()->GetRadius() + GetPosition(), GetVelocity(), {0, 0}, 0);
-		Engine::GetGSComponent<MeteorBitEmitter>()->Emit(10, VecterPosition.Normalize() * GetGOComponent<CS230::CircleCollision>()->GetRadius() + GetPosition(), GetVelocity(), (VecterPosition.Normalize() * 2.0 + objectB->GetVelocity().Normalize()) * 100.0, PI / 2.0);
+		math::vec2 vectorToobject = (objectB->GetPosition() - GetPosition()).Normalize();
+		math::vec2 collision_point = vectorToobject * GetGOComponent<CS230::CircleCollision>()->GetRadius();
+		math::vec2 object_velocity = objectB->GetVelocity().Normalize();
+
+		Engine::GetGSComponent<MeteorBitEmitter>()->Emit(10, collision_point + GetPosition(), GetVelocity(), (vectorToobject * 2.0 + object_velocity) * 50.0, PI / 2.0);
 		health -= 10;
 	}
 

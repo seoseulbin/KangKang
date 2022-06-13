@@ -4,7 +4,7 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Hares.cpp
 Project: CS230 final project
-Author: Seulbin Seo & Junsung Park
+Author: Seulbin Seo & Junseong Park
 Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Hares.h"
@@ -13,6 +13,7 @@ Creation date: 6/13/2022
 #include "../Engine/Engine.h"
 #include "Score.h"
 #include "Player.h"
+#include "GameParticles.h"
 
 Hares::Hares(math::vec2 pos, std::vector<double> patrolNodes, Player* playerPtr)
 	: GameObject(pos), currPatrolNode(0), patrolNodes(patrolNodes), playerPtr(playerPtr)
@@ -113,11 +114,9 @@ void Hares::State_Angry::Update(GameObject* object, double )
 {
 	Hares* hares = static_cast<Hares*>(object);
 	math::rect2 collideRect = object->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
-	CS230::RectCollision* player_collisoi = hares->playerPtr->GetGOComponent<CS230::RectCollision>();
-	if (player_collisoi != nullptr)
-	{
-		math::rect2 playerRect = player_collisoi->GetWorldCoorRect();
+	math::rect2 playerRect = hares->playerPtr->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
 
+	
 		if (hares->GetPosition().x >= hares->patrolNodes[hares->currPatrolNode] && hares->GetVelocity().x >= 0
 			|| hares->GetPosition().x <= hares->patrolNodes[hares->currPatrolNode] && hares->GetVelocity().x <= 0)
 		{
@@ -135,7 +134,6 @@ void Hares::State_Angry::Update(GameObject* object, double )
 				hares->ChangeState(&hares->stateHangAround);
 			}
 		}
-	}
 }
 
 void Hares::State_Angry::TestForExit(GameObject* ) {}
@@ -143,14 +141,21 @@ void Hares::State_Angry::TestForExit(GameObject* ) {}
 void Hares::State_FallDown::Enter(GameObject* object)
 {
 	Hares* hares = static_cast<Hares*>(object);
+	math::rect2 collideRect = object->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+	math::rect2 playerRect = hares->playerPtr->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+
 	hares->RemoveGOComponent<CS230::Collision>();
 	hares->GetGOComponent<CS230::Sprite>()->PlayAnimation(static_cast<int>(Hares_Anims::Hares_FallDown));
+
+	math::vec2 VecterPosition = hares->playerPtr->GetPosition() - hares->GetPosition();
+	math::vec2 VectorToobject = (hares->playerPtr->GetPosition() - hares->GetPosition()).Normalize();
+	Engine::GetGSComponent<BloodEnitter>()->Emit(10, math::vec2{ hares->GetPosition().x, hares->GetPosition().y + (collideRect.Top() - playerRect.Bottom()) / 2.0 }, hares->GetVelocity(), (VectorToobject * 2.0 + hares->GetVelocity().Normalize()) * 70.0, PI / 2.0);
 	hares->SetVelocity(math::vec2{ 0, 0 });
 
 	Engine::GetGSComponent<Score>()->AddScore(10);
 }
 
-void Hares::State_FallDown::Update(GameObject* , double) {}
+void Hares::State_FallDown::Update(GameObject* , double){}
 
 void Hares::State_FallDown::TestForExit(GameObject* ) {}
 

@@ -4,7 +4,7 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Hero.h
 Project: CS230 final project
-Author: Seulbin Seo & Junsung Park
+Author: Seulbin Seo & Junseong Park
 Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Player.h"
@@ -102,15 +102,7 @@ math::vec2 Player::GetPosition()
 
 bool Player::CanCollideWith(GameObjectType objectB)
 {
-	if (objectB == GameObjectType::Coin)
-	{
-		return true;
-	}
-	if (objectB == GameObjectType::Hares)
-	{
-		return true;
-	}
-	return false;
+	return true;
 }
 
 void Player::ResolveCollision(GameObject* objectB)
@@ -132,6 +124,7 @@ void Player::ResolveCollision(GameObject* objectB)
 				isEscape = true;
 				break;
 			case GameObjectType::Hares:
+				
 				isDead = true;
 				break;
 		}

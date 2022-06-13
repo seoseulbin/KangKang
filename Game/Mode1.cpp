@@ -57,6 +57,7 @@ void Mode1::Load()
 
 	gameObjectManager->Add(heroPtr);
 	AddGSComponent(new SmokeEmitter());
+	
 	AddGSComponent(new Background());
 	AddGSComponent(scorePtr);
 	AddGSComponent(timerPtr);

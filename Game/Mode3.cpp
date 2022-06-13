@@ -4,7 +4,7 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Mode3.cpp
 PProject: CS230 final project
-Author: Seulbin Seo & Junsung Park
+Author: Seulbin Seo & Junseong Park
 Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "..\Engine\Engine.h"	//GetGameStateManager
@@ -20,6 +20,7 @@ Creation date: 6/13/2022
 #include "../Engine/Collision.h"
 #include "Hares.h"
 #include "Coin.h"
+#include "GameParticles.h"
 
 #include <iostream>
 
@@ -67,6 +68,7 @@ void Mode3::Load()
 	scorePtr = new Score({ 0, Fonts::Font1 });
 	timerPtr = new Timer(61);
 
+	AddGSComponent(new BloodEnitter());
 	AddGSComponent(new Background());
 	AddGSComponent(scorePtr);
 	AddGSComponent(timerPtr);
