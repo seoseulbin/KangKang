@@ -24,6 +24,8 @@ Hares::Hares(math::vec2 pos, std::vector<double> patrolNodes, Player* playerPtr)
 	currState->Enter(this);
 }
 
+
+
 void Hares::ResolveCollision(GameObject* objectA)
 {
 	if (objectA->GetObjectType() == GameObjectType::Laser)

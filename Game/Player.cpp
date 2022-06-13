@@ -52,39 +52,40 @@ void Player::Update(double dt)
 		hurtTimer = 0;
 	}
 
-	if (GetPosition().x <= GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0)
-	{
-		SetPosition({ GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
-		SetVelocity({ 0, GetVelocity().y });
-	}
-	if (GetPosition().x + GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0 > Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x)
-	{
-		SetPosition(
-			{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
-		SetVelocity({ 0, GetVelocity().y });
-	}
-	if (GetPosition().y < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 90)
-	{
-		SetPosition(
-			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 - 90 });
-		SetVelocity({ GetVelocity().x, 0});
-	}
-	if ((GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y)
-	{
-		SetPosition(
-			{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y   });
-		SetVelocity({ 0, GetVelocity().y });
-	}
+		if (GetPosition().x <= GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0)
+		{
+			SetPosition({ GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
+			SetVelocity({ 0, GetVelocity().y });
+		}
+		if (GetPosition().x + GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0 > Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x)
+		{
+			SetPosition(
+				{ Engine::GetGSComponent<CS230::Camera>()->GetPosition().x + Engine::GetWindow().GetSize().x - GameObject::GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect().Size().x / 2.0, GetPosition().y });
+			SetVelocity({ 0, GetVelocity().y });
+		}
+		if (GetPosition().y < GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 - 90)
+		{
+			SetPosition(
+				{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2 - 90 });
+			SetVelocity({ GetVelocity().x, 0 });
+		}
+		if ((GetPosition().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0) > Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y)
+		{
+			SetPosition(
+				{ GetPosition().x, Engine::GetGSComponent<CS230::Camera>()->GetPosition().y + Engine::GetWindow().GetSize().y - GetGOComponent<CS230::Sprite>()->GetFrameSize().y });
+			SetVelocity({ 0, GetVelocity().y });
+		}
 
-	if (ShootKey.IsKeyReleased() == true && isDead == false)
-	{
-		Engine::GetGSComponent<CS230::GameObjectManager>()->
-			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-				GetHotSpot(1)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * -Laser::LaserVelocity2, 3));
-		Engine::GetGSComponent<CS230::GameObjectManager>()->
-			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-				GetHotSpot(2)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity2, 3));
-	}
+		if (ShootKey.IsKeyReleased() == true && isDead == false)
+		{
+			Engine::GetGSComponent<CS230::GameObjectManager>()->
+				Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
+					GetHotSpot(1)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * -Laser::LaserVelocity2, 3));
+			Engine::GetGSComponent<CS230::GameObjectManager>()->
+				Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
+					GetHotSpot(2)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity2, 3));
+		}
+	
 }
 
 void Player::Draw(math::TransformMatrix displayMatrix)
@@ -100,27 +101,28 @@ math::vec2 Player::GetPosition()
 	return GameObject::GetPosition();
 }
 
-bool Player::CanCollideWith(GameObjectType objectB)
+bool Player::CanCollideWith(GameObjectType )
 {
-	return true;
+	if(getAlready == false)
+		return true;
+	return false;
 }
 
 void Player::ResolveCollision(GameObject* objectB)
 {
 	math::rect2 collideRect = objectB->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
 	math::rect2 playerRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
-	if (GetAlready() == false) {
+	if (GetAlready() == false) 
+	{
 		switch (objectB->GetObjectType())
 		{
 			case GameObjectType::Car:
 				hurtTimer = hurtTime;
-				objectB->ResolveCollision(this);
 				SetPosition(math::vec2{ 600, 0 });
 				break;
 			case GameObjectType::Coin:
 				objectB->ResolveCollision(this);
 				getAlready = true;
-
 				isEscape = true;
 				break;
 			case GameObjectType::Hares:
