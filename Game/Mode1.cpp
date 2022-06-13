@@ -5,7 +5,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: Mode1.cpp
 Project: CS230
 Author: Seulbin Seo
-Creation date: 05//2022
+Creation date: 05/08/2022
 -----------------------------------------------------------------*/
 #include "..\Engine\Engine.h"	//GetGameStateManager
 #include "Screens.h"

@@ -3,9 +3,9 @@ Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Laser.cpp
-Project: CS230
-Author: Seulbin Seo
-Creation date: 5/25/2022
+Project: CS230 final project
+Author: Seulbin Seo & Junsung Park
+Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Laser.h"
 #include "../Engine/Engine.h"
@@ -44,13 +44,11 @@ void Laser::Update(double dt)
 	}
 	else if (GetModeNum() == 3)
 	{
-		/*if (GetPosition().x > Engine::GetWindow().GetSize().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
-			GetPosition().x < -GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
-			GetPosition().y > Engine::GetWindow().GetSize().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().y  *5||
-			GetPosition().y < -GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0)
+		if (GetPosition().x > Engine::GetWindow().GetSize().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
+			GetPosition().x < -GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0)
 		{
 			SetDestroy();
-		}*/
+		}
 	}
 }
 

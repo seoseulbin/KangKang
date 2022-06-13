@@ -3,9 +3,9 @@ Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 File Name: Score.h
-Project: CS230
-Author: Seulbin Seo
-Creation date: 5/09/2022
+Project: CS230 final project
+Author: Seulbin Seo & Junsung Park
+Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #pragma once
 #include "..\Engine\Texture.h" 

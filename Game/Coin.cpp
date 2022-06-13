@@ -2,10 +2,10 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Coin1.cpp
-Project: CS230
-Author: Seulbin Seo
-Creation date: 6/10/2022
+File Name: Coin.cpp
+Project: CS230 final project
+Author: Seulbin Seo & Junsung Park
+Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Coin.h"
 #include "Coin_Anim.h"

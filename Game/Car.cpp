@@ -2,10 +2,10 @@
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
-File Name: Car1.cpp
-Project: CS230
-Author: Seulbin Seo
-Creation date: 6/08/2022
+File Name: Car.cpp
+Project: CS230 final project
+Author: Seulbin Seo & Junsung Park
+Creation date: 6/13/2022
 -----------------------------------------------------------------*/
 #include "Car.h"
 #include "ScreenWrap.h"
