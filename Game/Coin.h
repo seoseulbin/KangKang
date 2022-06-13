@@ -19,6 +19,7 @@ public:
     std::string GetObjectTypeName() { return "Coin"; }
     bool CanCollideWith(GameObjectType objectBType) override;
     void ResolveCollision(GameObject* objectB) override;
+   
 
 private:
     class Rotate : public State
@@ -32,5 +33,7 @@ private:
     Rotate stateRotate;
 
     static constexpr double bounceVelocity = 600;
+    //Player* playerPtr;
+    bool getAlready;
     int CoinNum;
 };

@@ -13,6 +13,7 @@ Creation date: 6/10/2022
 #include "Score.h"
 #include "../Engine/Collision.h"
 #include "Timer.h"
+#include "Player.h"
 
 Coin::Coin(math::vec2 startPos, int coinNum) : GameObject(startPos), CoinNum(coinNum)
 {
@@ -33,22 +34,6 @@ Coin::Coin(math::vec2 startPos, int coinNum) : GameObject(startPos), CoinNum(coi
 }
 
 
-//std::string Coin::GetObjectTypeName()
-//{
-//	if (CoinNum == 1)
-//	{
-//		return "Coin1";
-//	}
-//	else if (CoinNum == 2)
-//	{
-//		return "Coin2";
-//	}
-//	else if (CoinNum == 3)
-//	{
-//		return "Coin3";
-//	}
-//}
-
 bool Coin::CanCollideWith(GameObjectType)
 {
 	return false;
@@ -56,7 +41,9 @@ bool Coin::CanCollideWith(GameObjectType)
 
 void Coin::ResolveCollision(GameObject* object)
 {
-	if (object->GetObjectType() == GameObjectType::Player)
+	Coin* coin = static_cast<Coin*>(object);
+
+	if (coin->GetObjectType() == GameObjectType::Player)
 	{
 		if (CoinNum == 1)
 		{

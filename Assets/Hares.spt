@@ -12,5 +12,5 @@ Frame 1050 0
 Frame 1200 0
 CollisionRect -75 0 75 160 
 Anim assets/Hares_HangAround.anm
-Anim Assets/Hares_Angey.anm
+Anim Assets/Hares_Angry.anm
 Anim assets/Hares_FallDown.anm

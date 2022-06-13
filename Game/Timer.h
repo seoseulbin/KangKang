@@ -10,6 +10,7 @@ Creation date: 5/09/2022
 #pragma once
 #include "..\Engine\Texture.h" 
 #include "..\Engine\Component.h" 
+#include "Player.h"
 
 class Timer : public CS230::Component {
 public:
@@ -22,5 +23,6 @@ public:
 private:
     double timer;
     bool timeStop;
+    Player* playerPtr;
     CS230::Texture timeTexture;
 };

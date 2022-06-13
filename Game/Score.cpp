@@ -28,7 +28,6 @@ void Score::Draw(math::ivec2 location)
 	RenderText();
 }
 
-
 void Score::RenderText()
 {
 	std::string scoreString = "Score: " + std::to_string(score / 100) + std::to_string((score % 100) / 10) + std::to_string(score % 10);

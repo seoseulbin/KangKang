@@ -17,6 +17,7 @@ Creation date: 06/08/2022
 #include "Player_Anims.h"
 #include "GameObjectTypes.h"
 #include "Laser.h"
+#include "Coin.h"
 
 Player::Player(math::vec2 startpos)
 	:GameObject(startpos),
@@ -79,10 +80,10 @@ void Player::Update(double dt)
 	{
 		Engine::GetGSComponent<CS230::GameObjectManager>()->
 			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-				GetHotSpot(1)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 3));
+				GetHotSpot(1)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * -Laser::LaserVelocity2, 3));
 		Engine::GetGSComponent<CS230::GameObjectManager>()->
 			Add(new Laser(GetMatrix() * static_cast<math::vec2>(GetGOComponent<CS230::Sprite>()->
-				GetHotSpot(2)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity, 3));
+				GetHotSpot(2)), GetRotation(), GetScale(), math::RotateMatrix(GetRotation()) * Laser::LaserVelocity2, 3));
 	}
 }
 
@@ -105,6 +106,10 @@ bool Player::CanCollideWith(GameObjectType objectB)
 	{
 		return true;
 	}
+	if (objectB == GameObjectType::Hares)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -112,18 +117,24 @@ void Player::ResolveCollision(GameObject* objectB)
 {
 	math::rect2 collideRect = objectB->GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
 	math::rect2 playerRect = GetGOComponent<CS230::RectCollision>()->GetWorldCoorRect();
+	if (GetAlready() == false) {
+		switch (objectB->GetObjectType())
+		{
+			case GameObjectType::Car:
+				hurtTimer = hurtTime;
+				objectB->ResolveCollision(this);
+				SetPosition(math::vec2{ 600, 0 });
+				break;
+			case GameObjectType::Coin:
+				objectB->ResolveCollision(this);
+				getAlready = true;
 
-	switch (objectB->GetObjectType())
-	{
-	case GameObjectType::Car:
-		hurtTimer = hurtTime;
-		objectB->ResolveCollision(this);
-		SetPosition(math::vec2{ 600, 0 });
-		break;
-	case GameObjectType::Coin:
-		objectB->ResolveCollision(this);
-		isReallyEscape = true;
-		break;
+				isEscape = true;
+				break;
+			case GameObjectType::Hares:
+				isDead = true;
+				break;
+		}
 	}
 
 }

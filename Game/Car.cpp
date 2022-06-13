@@ -12,7 +12,7 @@ Creation date: 6/08/2022
 #include "Car1_Anims.h"
 #include "Player.h"
 
-Car::Car(math::vec2 pos, int CarNum) : GameObject(pos), CarNumber(CarNum)
+Car::Car(math::vec2 pos, int CarNum) : GameObject(pos), CarNumber(CarNum), playerPtr(playerPtr)
 {
 	if (CarNumber == 1)
 	{

@@ -28,6 +28,13 @@ private:
         void TestForExit(GameObject* object) override;
         std::string GetName() override { return "Hang around"; }
     };
+    class State_Angry : public State {
+    public:
+        void Enter(GameObject* object) override;
+        void Update(GameObject* object, double dt) override;
+        void TestForExit(GameObject* object) override;
+        std::string GetName() override { return "Hang angry"; }
+    };
     class State_FallDown : public State {
     public:
         void Enter(GameObject* object) override;
@@ -37,6 +44,7 @@ private:
     };
 
     State_HangAround stateHangAround;
+    State_Angry stateAngery;
     State_FallDown stateFallDown;
     Player* playerPtr;
 

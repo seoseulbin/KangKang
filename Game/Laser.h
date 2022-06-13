@@ -19,6 +19,7 @@ enum class GameObjectType;
 class Laser : public CS230::GameObject {
 public:
     static constexpr math::vec2 LaserVelocity = math::vec2{ 0, 600 };
+    static constexpr math::vec2 LaserVelocity2 = math::vec2{ 600, 0 };
 
     Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity, int modeNum);
     void Update(double dt) override;
@@ -26,5 +27,8 @@ public:
     virtual GameObjectType GetObjectType() override { return GameObjectType::Laser; }
     virtual bool CanCollideWith(GameObjectType objectBType) override;
     void ResolveCollision(GameObject* objectB) override;
+    int GetModeNum() { return ModeNum; }
 
+private:
+    int ModeNum;
 };

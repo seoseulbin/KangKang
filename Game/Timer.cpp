@@ -21,17 +21,21 @@ void Timer::Update(double dt)
 	if (timeStop == false)
 	{
 		timer -= dt;
+		if (timer < 0)
+		{
+			timeStop = true;
+		}
 	}
-	else if (timeStop == true)
+	
+	if (timeStop == true)
 	{
-		timer = 60;
+		timer = 0;
 	}
 
-	if (static_cast<int>(timer))
-	{
-		std::string timetexture = "Time: " + std::to_string(static_cast<int>(timer + 1));
+
+		std::string timetexture = "Time: " + std::to_string(static_cast<int>(timer));
 		timeTexture = Engine::GetSpriteFont(static_cast<int>(Fonts::Font1)).DrawTextToTexture(timetexture, 0xFFFFFFFF, true);
-	}
+	
 }
 
 void Timer::Draw(math::ivec2 location)
@@ -41,7 +45,7 @@ void Timer::Draw(math::ivec2 location)
 
 bool Timer::hasEnded()
 {
-	if (timer < 0)
+	if (timer <= 0)
 	{
 		return true;
 	}

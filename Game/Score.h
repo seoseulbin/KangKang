@@ -19,11 +19,11 @@ public:
     void AddScore(int newPoints);
     void Draw(math::ivec2 location);
     unsigned int GetScore() { return score; }
-    void SetScore(unsigned int finalScore) { score = finalScore; }
 private:
     void RenderText();
 
     Fonts fontToUse;
     unsigned int score;
+
     CS230::Texture scoreTexture;
 };

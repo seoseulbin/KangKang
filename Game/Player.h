@@ -27,10 +27,10 @@ public:
 	std::string GetObjectTypeName() { return "Player"; }
 	void ResolveCollision(GameObject* objectB) override;
 	bool IsDead() { return isDead; }
-	void SetIsReallyDead(bool isreallydead) {  isReallyDead = isreallydead; }
-	bool GetIsReallyDead() { return isReallyDead; }
-	void SetEscape(bool isEscape) { isReallyEscape = isEscape; }
-	bool GetEscape() { return isReallyEscape; }
+	bool GetIsReallyDead() { return isDead; }
+	void SetEscape(bool IsEscape) { IsEscape = isEscape; }
+	bool GetEscape() { return isEscape; }
+	bool GetAlready() { return getAlready; }
 
 private:
 	class State_Stop : public State
@@ -86,10 +86,12 @@ private:
 
 	static constexpr double GoJump = 800;
 	static constexpr double hurtTime = 2;
+	static constexpr double PI = 3.141592653589793;
 
 	double hurtTimer;
 	bool drawPlayer;
+	bool isEscape;
 	bool isDead;
-	bool isReallyDead;
 	bool isReallyEscape;
+	bool getAlready;
 };

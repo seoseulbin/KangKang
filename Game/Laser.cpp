@@ -14,13 +14,13 @@ Creation date: 5/25/2022
 #include "../Engine/GameObjectManager.h"
 
 Laser::Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laserVelocity, int modeNum)
-	:GameObject(pos, rotation, scale)
+	:GameObject(pos, rotation, scale), ModeNum(modeNum)
 {
-	if (modeNum == 2)
+	if (ModeNum == 2)
 	{
 		AddGOComponent(new CS230::Sprite("assets/Laser.spt", this));
 	}
-	else if (modeNum == 3)
+	else if (ModeNum == 3)
 	{
 		AddGOComponent(new CS230::Sprite("assets/Laser1.spt", this));
 	}
@@ -31,12 +31,26 @@ Laser::Laser(math::vec2 pos, double rotation, math::vec2 scale, math::vec2 laser
 void Laser::Update(double dt)
 {
 	GameObject::Update(dt);
-	if (GetPosition().x > Engine::GetWindow().GetSize().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
-		GetPosition().x < -GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
-		GetPosition().y > Engine::GetWindow().GetSize().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0 ||
-		GetPosition().y < -GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0)
+
+	if (GetModeNum() == 2)
 	{
-		SetDestroy();
+		if (GetPosition().x > Engine::GetWindow().GetSize().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
+			GetPosition().x < -GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
+			GetPosition().y > Engine::GetWindow().GetSize().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0 ||
+			GetPosition().y < -GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0)
+		{
+			SetDestroy();
+		}
+	}
+	else if (GetModeNum() == 3)
+	{
+		/*if (GetPosition().x > Engine::GetWindow().GetSize().x + GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
+			GetPosition().x < -GetGOComponent<CS230::Sprite>()->GetFrameSize().x / 2.0 ||
+			GetPosition().y > Engine::GetWindow().GetSize().y + GetGOComponent<CS230::Sprite>()->GetFrameSize().y  *5||
+			GetPosition().y < -GetGOComponent<CS230::Sprite>()->GetFrameSize().y / 2.0)
+		{
+			SetDestroy();
+		}*/
 	}
 }
 

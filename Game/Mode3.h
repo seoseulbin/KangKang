@@ -36,9 +36,7 @@ public:
 	std::string GetName() override { return "Mode3"; }
 
 private:
-	int lives;
 	CS230::Texture scoreTexture;
-	CS230::Texture livesTexture;
 	CS230::Texture timerTexture;
 
 	Background* BGround;
@@ -47,7 +45,6 @@ private:
 	CS230::Texture GameOverTexture;
 	CS230::Texture RestartTexture;
 	CS230::Texture WinTexture;
-	CS230::Texture FinalScoreTexture;
 	CS230::GameObjectManager* gameObjectManager;
 	Player* playerPtr;
 	Score* scorePtr;
